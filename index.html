@@ -1,0 +1,568 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  
+  <title>Simon</title>
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+
+ <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet"> 
+
+<link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet">
+  
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+
+      <style>
+      .back-img {
+  position: absolute;
+  top: 0px;
+  left: -1px;
+}
+
+body {
+  background-image: url(https://www.dropbox.com/s/nw179mfc8frnes5/back.png?dl=1);
+}
+
+.footer {
+  text-align: center;
+  font-size: 17px;
+  position: relative;
+  bottom: -260px;
+  /* width: 300px; */
+  border-top: 1px solid grey;
+  margin: auto;
+  padding-top: 14px;
+  padding-bottom: 36px;
+}
+
+span {
+  position: relative;
+  top: -23px;
+  left: -17px;
+  font-size: 21px;
+}
+
+.test {
+  width: 40px;
+  height: 77px;
+  background-color: #AE4255;
+}
+
+.displayc {
+  width: 10px;
+  margin: auto;
+  position: relative;
+  top: -141px;
+  left: -22px;
+}
+
+.simon-svg {
+  width: 202px;
+  height: 202px;
+  text-align: center;
+  margin: auto;
+  position: relative;
+  top: 200px;
+  transform: scale(2.5);
+  -ms-transform: scale(2.5);
+  -webkit-transform: scale(2.5);
+}
+
+.ban {
+  font-size: 97px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.simon-outer {
+  margin: auto;
+  width: 600px;
+  height: 600px;
+  text-align: center;
+  padding: 10px;
+}
+
+.logo {
+  width: 155px;
+  height: 55px;
+  position: relative;
+  top: -105px;
+  left: 22px;
+  font-size: 37px;
+  color: #2d2c2c;
+  /* font-family: Alfa; */
+  font-family: 'Alfa Slab One', cursive;
+}
+
+.buttons {
+  position: relative;
+  top: 139px;
+  left: 196px;
+  width: 0;
+}
+
+.display {
+  font-family: "VT323",monospace;
+  width: 61px;
+  height: 39px;
+  border: 2px solid #808080;
+  background-color: rgba(0, 0, 0, 0.93);
+  border-radius: 5px;
+  position: relative;
+  top: -99px;
+  left: 22px;
+  font-size: 27px;
+  color: #F00;
+  padding-bottom: 39px;
+}
+
+.start {
+  position: relative;
+  top: -134px;
+  left: 106px;
+  width: 23px;
+  height: 23px;
+  border: 4px solid #808080;
+  border-radius: 50%;
+  background-color: #F00;
+}
+
+.strict {
+  position: relative;
+  top: -157px;
+  left: 144px;
+  width: 23px;
+  height: 23px;
+  border: 4px solid #808080;
+  border-radius: 50%;
+  background-color: #FF0;
+}
+
+.strict-led {
+  position: relative;
+  top: -201px;
+  left: 150px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #808080;
+  border-radius: 50%;
+  background-color: #251E1E;
+}
+
+.on-off {
+  position: relative;
+  top: -148px;
+  width: 32px;
+  left: 40px;
+  height: 14px;
+  background-color: #000;
+  border: 1px solid #808080;
+  border-radius: 3%;
+}
+
+.switch {
+  width: 16px;
+  height: 12px;
+  background-color: #0072FF;
+  position: relative;
+  top: 0.4px;
+  transition: all 0.2s ease 0s;
+  border: 1px solid grey;
+  border-radius: 2px;
+}
+
+p {
+  position: relative;
+  font-size: 11px;
+  color: #2d2c2c;
+}
+
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  
+<div class="container-fluid">
+  
+  <audio id="wrong" src="https://www.dropbox.com/s/jgion6tefapef82/beep-5.wav?dl=1" preload="auto"></audio>
+  <audio id="vic" src="https://www.dropbox.com/s/tnzwc749fbqf08t/smb_1-up.wav?dl=1" preload="auto"></audio>
+  <audio id="1" src="https://www.dropbox.com/s/aswhdmdpnfkknyz/1.wav?dl=1" preload="auto"></audio>
+  <audio id="2" src="https://www.dropbox.com/s/flwyx5860neiwja/2.wav?dl=1" preload="auto"></audio>
+  <audio id="3" src="https://www.dropbox.com/s/7gadfzha8dcp5mm/3.wav?dl=1" preload="auto"></audio>
+  <audio id="4" src="https://www.dropbox.com/s/7179leu10j3vmpc/A_2.wav?dl=1" preload="auto"></audio>
+  <div class="test"></div>
+  
+  
+  <div class="ban">Simon Game</div>
+
+  <div class="simon-outer">
+   
+  <div class="simon-svg">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="201.333px" height="201.332px" viewBox="0 0 201.333 201.332" enable-background="new 0 0 201.333 201.332" xml:space="preserve">
+<path fill="#2B2B2B" d="M201.333,100.666c0,55.597-45.072,100.666-100.665,100.666C45.071,201.332,0,156.263,0,100.666
+	S45.071,0,100.668,0C156.26,0,201.333,45.069,201.333,100.666z"></path>
+<path d="M198.333,100.666c0,53.94-43.729,97.666-97.665,97.666C46.728,198.332,3,154.606,3,100.666S46.728,3,100.668,3
+	C154.604,3,198.333,46.726,198.333,100.666z"></path>
+<g>
+	<defs>
+		<circle id="SVGID_1_" cx="100.666" cy="100.666" r="91.333"></circle>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_" overflow="visible"></use>
+	</clipPath>
+	<rect x="-2" y="100.666" clip-path="url(#SVGID_2_)" fill="#FFDE17" width="102.665" height="97.666"></rect>
+	<rect x="100.667" y="100.666" clip-path="url(#SVGID_2_)" fill="#21409A" width="102.665" height="97.666"></rect>
+	<rect x="100.667" y="3" clip-path="url(#SVGID_2_)" fill="rgb(27, 144, 14)" width="102.665" height="97.666"></rect>
+	<rect x="-2" y="3" clip-path="url(#SVGID_2_)" fill="rgb(195, 30, 46)" width="102.665" height="97.666"></rect>
+</g>
+<g>
+	<defs>
+		<circle id="SVGID_3_" cx="100.666" cy="100.666" r="86.667"></circle>
+	</defs>
+	<clipPath id="SVGID_4_">
+		<use xlink:href="#SVGID_3_" overflow="visible"></use>
+	</clipPath>
+	<rect class="3" x="3.246" y="100.666" clip-path="url(#SVGID_4_)" fill="#DFC323" width="97.419" height="92.676"></rect>
+	<rect class="2" x="100.667" y="100.666" clip-path="url(#SVGID_4_)" fill="#283676" width="97.419" height="92.676"></rect>
+	<rect class="1" x="100.667" y="7.99" clip-path="url(#SVGID_4_)" fill="rgb(19, 90, 11)" width="97.419" height="92.676"></rect>
+	<rect class="4" x="3.246" y="7.99" clip-path="url(#SVGID_4_)" fill="rgb(134, 16, 27)" width="97.419" height="92.676"></rect>
+</g>
+<g display="none">
+	<defs>
+		<circle id="SVGID_5_" cx="100.666" cy="100.666" r="91.333"></circle>
+	</defs>
+	<clipPath id="SVGID_6_" display="inline">
+		<use xlink:href="#SVGID_5_" overflow="visible"></use>
+	</clipPath>
+	<rect x="-2" y="100.666" display="inline" clip-path="url(#SVGID_6_)" fill="#FFDE17" width="102.665" height="97.666"></rect>
+	<rect x="100.667" y="100.666" display="inline" clip-path="url(#SVGID_6_)" fill="#3C59A8" width="102.665" height="97.666"></rect>
+	<rect x="100.667" y="3" display="inline" clip-path="url(#SVGID_6_)" fill="#00A14B" width="102.665" height="97.666"></rect>
+	<rect x="-2" y="3" display="inline" clip-path="url(#SVGID_6_)" fill="#ED1C24" width="102.665" height="97.666"></rect>
+</g>
+<g display="none">
+	<defs>
+		<circle id="SVGID_7_" cx="100.666" cy="100.666" r="86.667"></circle>
+	</defs>
+	<clipPath id="SVGID_8_" display="inline">
+		<use xlink:href="#SVGID_7_" overflow="visible"></use>
+	</clipPath>
+	<rect x="3.246" y="100.666" display="inline" clip-path="url(#SVGID_8_)" fill="#FFEF94" width="97.419" height="92.676"></rect>
+	<rect x="100.667" y="100.666" display="inline" clip-path="url(#SVGID_8_)" fill="#A6B6DE" width="97.419" height="92.676"></rect>
+	<rect x="100.667" y="7.99" display="inline" clip-path="url(#SVGID_8_)" fill="#81C997" width="97.419" height="92.676"></rect>
+	<rect x="3.246" y="7.99" display="inline" clip-path="url(#SVGID_8_)" fill="#F1636A" width="97.419" height="92.676"></rect>
+</g>
+<rect x="97.167" y="6.041" width="7" height="189"></rect>
+<rect x="6.167" y="97.166" width="189" height="7"></rect>
+<circle cx="100.666" cy="100.666" r="50.333"></circle>
+<circle fill="#ddd" cx="100.666" cy="100.666" r="40.07"></circle>
+</svg>
+     
+    </div>
+    <div class="buttons">
+      <div class="logo">Simon <span>&reg;</span></div>
+       <div class="display"><div class="d"></div>
+        <p style="top: 20px;"></p>
+       </div>
+      <div class="start">
+        <p style="top:20px; left:-8px;">START</p></div>
+       <div class="strict"><p style="top:20px; left:-8px;">STRICT</p></div>
+       <div class="strict-led"></div>
+       
+       <div class="on-off">
+         <div class="switch"></div><p style="top: 1px;left: -2px;">OFF/ON</p></div>
+       
+    </div>
+    <div class="footer">created by ssm123ssm</div>
+    
+    
+  </div>
+  
+  
+</div>
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+
+    <script>
+    var state = 0;
+var strict = 0;
+var count = 1;
+var cur_count = 0;
+var arr = [];
+var userTurn = 0;
+var user_click_count = 1;
+var tm;
+var tm2;
+var tm3;
+var tm4;
+var tm_arr =[];
+var vic = 7;
+
+function playWrong() {
+    document.getElementById('wrong').play(); 
+    //console.log("played");
+}
+function playVic() {
+    document.getElementById('vic').play(); 
+    //console.log("played");
+}
+
+function tone(cls){
+  var cl = cls.toString();
+  document.getElementById(cl).play(); 
+}
+
+
+
+
+
+function off(){
+  $(".1, .2, .3, .4, .start, .strict").unbind();
+  $(".display").html("");
+  $(".strict-led").css("background-color","#251e1e");
+  //$(".start, .strict").unbind();
+  $(".switch").css("left","0px");
+  strict = 0;
+  lightOff();
+  arr = [];
+  count = 1;
+  cur_count = 0;
+  userTurn = 0;
+  clearTimeout(tm);
+}
+
+function on(){
+  
+  console.log("on fn");
+  tm_arr.forEach(function(val){
+    clearTimeout(val);
+  });
+  tm_arr = [];
+  state = 1;
+ strict = 0;
+  $(".strict-led").css("background-color","#251e1e");
+ count = 1;
+ cur_count = 0;
+ arr = [];
+ userTurn = 0;
+ user_click_count = 1;
+  generate(22);
+  blink();
+}
+function blink(){
+  $(".start").unbind();
+  $(".1, .2, .3, .4").unbind();
+  
+  console.log("blink fn");
+  if (userTurn){
+    getUser();
+  }
+  else{
+    if(cur_count < count){
+      if(cur_count + 1 == count){
+        userTurn = 1;    
+      }
+      $(".display").html(count);
+      tone(arr[cur_count]);
+      light(arr[cur_count]);
+      tm3 = setTimeout(function(){
+         lightOff();
+         tm4 = setTimeout(function(){
+             cur_count++;
+             blink();
+        
+      },500);
+    },500);
+      tm_arr.push(tm3);
+      tm_arr.push(tm4);
+    }
+  }
+}
+function getUser(){
+  $(".start").on("click", function(){
+    if(state){
+      
+      //off();
+      on();
+    }
+  });
+  
+  
+  console.log("getUser");
+  count++;
+  cur_count = 0;
+  
+  tm = setTimeout(function(){
+    $(".1, .2, .3, .4").unbind();
+    playWrong();
+    console.log("time out");
+    $(".display").html("!!");
+    setTimeout(function(){
+      if(!strict){
+      count--;
+      blink();      
+    }
+        
+    },1000);
+   // $(".1, .2, .3, .4").unbind();
+  },count * 1500);
+    tm_arr.push(tm);
+    tm_arr.push(setTimeout(function(){
+      userTurn= 0;
+      var user_arr = [];
+      $(".1, .2, .3, .4").mousedown(function(){
+        light($(this).attr("class"));
+      });
+      $(".1, .2, .3, .4").mouseup(function(){
+        lightOff();
+      });
+      $(".1, .2, .3, .4").on("click", function(){
+        console.log(arr[user_click_count-1]);
+        var clicked = parseInt($(this).attr("class"));
+        console.log("clicked is " + clicked);
+        console.log("Expected :" + arr[user_click_count - 1]);
+        if(arr[user_click_count -1 ] == clicked){
+          tone(clicked);
+          console.log("correct click");
+           user_click_count ++;
+        
+          if(user_click_count == count){
+            if(count == vic){
+              console.log("victory");
+              $(".display").html("WON");
+              arr = [];
+              generate(22);
+              playVic();
+              user_click_count = 1;
+              count = 1;
+           tm_arr.push(setTimeout(blink, 2000));
+           clearTimeout(tm);
+            }
+            
+           else{
+             $(".1, .2, .3, .4").unbind();
+             console.log("Finished");
+           user_click_count = 1;
+           tm_arr.push(setTimeout(blink, 2000));
+           clearTimeout(tm);
+           }
+            
+        }
+        }
+         else {
+           $(".1, .2, .3, .4").unbind();
+           playWrong();
+           
+           console.log("false");
+           $(".display").html("!!");
+           if(!strict){
+             
+            
+           count --;
+           user_click_count = 1;
+           tm2 = setTimeout(blink, 1000);
+             tm_arr.push(tm2);
+           }
+           
+           //$(".1, .2, .3, .4").unbind();
+           clearTimeout(tm);
+              }
+          
+      });
+      
+      
+    }, 200));
+}
+
+function generate(l){
+  for(var i = 0; i <l; i++){
+    var t = Math.floor(Math.random() * 4) + 1;
+    arr.push(t);
+  }
+  console.log(arr);
+}
+
+function light(val){
+  if(val == 1){
+    $(".1").css("fill","#5fe050");
+  }
+  if(val == 2){
+    $(".2").css("fill","#7688d8");
+  }
+  if(val == 3){
+    $(".3").css("fill","#ffe75d");
+  }
+  if(val == 4){
+    $(".4").css("fill","#fb6775");
+  }
+}
+function lightOff(){
+  $(".1").css("fill","rgb(19, 90, 11)");
+  $(".2").css("fill","#283676");
+  $(".3").css("fill","#DFC323");
+  $(".4").css("fill","rgb(134, 16, 27)");
+}
+
+$(document).ready(function(){
+  
+  function fresh(){
+    if(state == 1){
+      off();
+      state =0;
+      $(".display").html("");
+    }
+    else{
+      $(".display").html("--");
+      $(".strict").on("click", function(){
+    
+    if(state){
+      
+      if(!strict){
+        $(".strict-led").css("background-color", "red");
+        //console.log("strict");
+        strict = 1;
+      }
+       else if(strict){
+        $(".strict-led").css("background-color", "#251E1E");
+        strict = 0;
+      } 
+      
+      console.log("now strict: " + strict);
+      
+    } 
+  });
+  $(".switch").css("left","14px");
+      $(".start").on("click", on);
+      state = 1;
+    }
+  }
+
+  $(".switch").on("click", function(){
+    //playWrong();
+    fresh()
+  });
+  
+  
+  
+  
+});
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 
